@@ -1,0 +1,96 @@
+<div class="container-fluid ">
+    <div class="">
+        <div class="row">
+            <div class="col-lg-2">
+
+            </div>
+            <div class="col-lg-9">
+              <div class="example-container mat-elevation-z8">
+                <div class="row">
+                <button mat-mini-fab color="primary"  (click)="addUser()">
+                  <mat-icon>add</mat-icon>
+                </button>
+                </div>
+                <div class="row">
+                <div class="example-header col-lg-2">
+                  <mat-form-field color="" class="bg-info">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="rechercher">
+                  </mat-form-field>
+                </div>
+                  <div class="example-header col-lg-10 bg-info">
+                <mat-paginator #paginator class=""
+                               [pageSize]="10"
+                               [pageSizeOptions]="[5, 10, 20, 50, 100]">
+                </mat-paginator>
+                  </div>
+                </div>
+                <mat-table #table [dataSource]="dataSource" matSort>
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+                  <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                      </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                      <mat-checkbox (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)">
+                      </mat-checkbox>
+                    </mat-cell>
+                  </ng-container>
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="weight">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="symbol">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="option">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Option </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                      <mat-slide-toggle
+                                        [checked]=" element.position % 2 == 0 ? true : false"></mat-slide-toggle>
+                      <button mat-mini-fab color="primary" (click)="edit(element)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-mini-fab color="warn" (click)="delete(element)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+
+                <button mat-raised-button color="warn" style=" margin-left: 80px" [disabled]="selection.selected.length==0"(click)="deleteSelection()">
+                  Supprimer
+                </button>
+              </div>
+
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+    </div>
+</div>

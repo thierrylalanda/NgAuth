@@ -1,0 +1,13 @@
+[
+  {
+    "username" : "lalanda",
+    "password":"lalanda",
+    "access_token":{
+      "connexion": "connexion",
+        "profile":"profile",
+      "deconnexion":"deconnexion",
+      "home":"home"
+    },
+    "idToken":"aebc1243789076"
+  }
+]
